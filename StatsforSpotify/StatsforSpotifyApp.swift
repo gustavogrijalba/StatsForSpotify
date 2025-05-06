@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct StatsforSpotifyApp: App {
+    @StateObject var spotifyController = SpotifyController()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(spotifyController: spotifyController)
         }
     }
 }

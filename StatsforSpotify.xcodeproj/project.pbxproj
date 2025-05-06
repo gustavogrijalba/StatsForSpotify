@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5AAC1AA52D7A515300F7047F /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AAC1A9E2D7A4B4A00F7047F /* SpotifyiOS.xcframework */; };
+		5AAC1AA62D7A515300F7047F /* SpotifyiOS.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5AAC1A9E2D7A4B4A00F7047F /* SpotifyiOS.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		5AAC1A822D7A4A4800F7047F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -23,15 +28,44 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5AAC1AA72D7A515300F7047F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5AAC1AA62D7A515300F7047F /* SpotifyiOS.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		5AAC1A712D7A4A4600F7047F /* StatsforSpotify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StatsforSpotify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AAC1A812D7A4A4800F7047F /* StatsforSpotifyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StatsforSpotifyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AAC1A8B2D7A4A4800F7047F /* StatsforSpotifyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StatsforSpotifyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AAC1A9E2D7A4B4A00F7047F /* SpotifyiOS.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:2FNC3A47ZF:Spotify"; lastKnownFileType = wrapper.xcframework; path = SpotifyiOS.xcframework; sourceTree = "<group>"; };
+		5AAC1AA22D7A4DC000F7047F /* StatsforSpotify-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StatsforSpotify-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5AAC1AA12D7A4B7100F7047F /* Exceptions for "StatsforSpotify" folder in "StatsforSpotify" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 5AAC1A702D7A4A4600F7047F /* StatsforSpotify */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5AAC1A732D7A4A4600F7047F /* StatsforSpotify */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5AAC1AA12D7A4B7100F7047F /* Exceptions for "StatsforSpotify" folder in "StatsforSpotify" target */,
+			);
 			path = StatsforSpotify;
 			sourceTree = "<group>";
 		};
@@ -52,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AAC1AA52D7A515300F7047F /* SpotifyiOS.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +110,8 @@
 		5AAC1A682D7A4A4600F7047F = {
 			isa = PBXGroup;
 			children = (
+				5AAC1AA22D7A4DC000F7047F /* StatsforSpotify-Bridging-Header.h */,
+				5AAC1A9E2D7A4B4A00F7047F /* SpotifyiOS.xcframework */,
 				5AAC1A732D7A4A4600F7047F /* StatsforSpotify */,
 				5AAC1A842D7A4A4800F7047F /* StatsforSpotifyTests */,
 				5AAC1A8E2D7A4A4800F7047F /* StatsforSpotifyUITests */,
@@ -102,6 +139,7 @@
 				5AAC1A6D2D7A4A4600F7047F /* Sources */,
 				5AAC1A6E2D7A4A4600F7047F /* Frameworks */,
 				5AAC1A6F2D7A4A4600F7047F /* Resources */,
+				5AAC1AA72D7A515300F7047F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -399,6 +437,7 @@
 				DEVELOPMENT_TEAM = Z2TUXVLCNH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StatsforSpotify/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -409,9 +448,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = org.gustavo.StatsforSpotify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "StatsforSpotify-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -428,6 +469,7 @@
 				DEVELOPMENT_TEAM = Z2TUXVLCNH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StatsforSpotify/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -438,9 +480,11 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = org.gustavo.StatsforSpotify;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "StatsforSpotify-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
