@@ -1,8 +1,8 @@
 # StatsForSpotify
 
-![App Icon](Images/appicon2.png)
+<img src="Images/icon.png" alt="App Icon" width="150" />
 
-An iOS app built with SwiftUI that displays your Spotify stats, including top tracks, top artists, and top genres.
+An iOS app built with SwiftUI that displays your Spotify stats, including top tracks, top artists, and top genres. The provided app icon is a placeholder AI generated image.
 
 ## Features
 
