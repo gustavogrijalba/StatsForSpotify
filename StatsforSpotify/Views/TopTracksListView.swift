@@ -33,10 +33,8 @@ enum TimeRange: String, CaseIterable {
 }
 
 struct TopTracksListView: View {
-    @State private var topTracks: UserTopTracksResponse?
     @ObservedObject var spotifyController: SpotifyController
-    @State private var isLoading: Bool = false
-    @State private var selectedTimeRange: TimeRange = .shortTerm
+    @StateObject private var viewModel = TopTracksViewModel()
     
     //have two columns for our lazygrid
     private let columns = [
@@ -49,7 +47,7 @@ struct TopTracksListView: View {
             Text("Your Top Tracks")
                 .font(.title)
             
-            Picker("Time Range", selection: $selectedTimeRange) {
+            Picker("Time Range", selection: $viewModel.selectedTimeRange) {
                 ForEach(TimeRange.allCases, id: \.self) { range in
                     Text(range.displayName).tag(range)
                 }
@@ -58,12 +56,12 @@ struct TopTracksListView: View {
             .padding()
             
             //show our loading view while our api fetches data
-            if isLoading {
+            if viewModel.isLoading {
                 LoadingView()
             } else {
                 ScrollView {
                     LazyVGrid(columns: columns, spacing: 16) {
-                        if let items = topTracks?.items {
+                        if let items = viewModel.topTracks?.items {
                             ForEach(Array(items.enumerated()), id: \.element.id) { index, track in
                                 TrackCard(rank: index + 1, track: track)
                                 //this padding is needed so that our trackcards show their title and aren't
@@ -77,25 +75,19 @@ struct TopTracksListView: View {
                 }
             }
         }
-        .onChange(of: selectedTimeRange) {
+        .onChange(of: viewModel.selectedTimeRange) {
             Task {
-                await fetchTopTracks()
+                //no need to assign the spotifycontroller here
+                //as it will be here already because it was assigned at appear
+                await viewModel.fetchTopTracks()
             }
         }
         .onAppear {
             Task {
-                await fetchTopTracks()
+                viewModel.spotifyController = spotifyController
+                await viewModel.fetchTopTracks()
             }
         }
     }
     
-    private func fetchTopTracks() async {
-        isLoading = true
-        defer { isLoading = false }
-        do {
-            topTracks = try await spotifyController.apiManager?.getUserTopTracks(time_range: selectedTimeRange.apiValue, limit: 50)
-        } catch {
-            print("Failed to fetch top tracks: \(error)")
-        }
-    }
 }
