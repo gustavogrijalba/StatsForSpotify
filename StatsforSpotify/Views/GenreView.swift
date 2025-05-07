@@ -12,7 +12,7 @@ struct GenreView: View {
     let genres: [String]
     //variable to make our bar chart animate
     @State private var animateBars = false
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Your Top Genres")
@@ -31,14 +31,14 @@ struct GenreView: View {
                     Text("\(index + 1). \(genre)")
                         .font(.subheadline)
                         .frame(width: 120, alignment: .leading)
-
+                    
                     GeometryReader { geometry in
                         //get the width of the container/screen that top genres is being held in
                         let maxWidth = geometry.size.width
                         //create a rectangle for each individual genre
                         Rectangle()
                             .fill(Color.green) //green for the spotify color
-                            //make each rectangle different by using its index
+                        //make each rectangle different by using its index
                             .frame(width: animateBars ? maxWidth * CGFloat(1.0 - (Double(index) * 0.15)) : 0,
                                    height: 10)
                             .cornerRadius(5)

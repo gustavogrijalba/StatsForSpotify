@@ -26,12 +26,12 @@ struct ArtistCarousel: View {
             .buttonStyle(.plain)
             
             ScrollView(.horizontal, showsIndicators: false) {
-                            LazyHStack(spacing: 20) {
-                                ForEach(Array(items.enumerated()), id: \.element.id) { (index, artist) in
-                                    ArtistCard(rank: index + 1, artist: artist)
-                                        .frame(width: UIScreen.main.bounds.width * 0.4)
-                                }
-                            }
+                LazyHStack(spacing: 20) {
+                    ForEach(Array(items.enumerated()), id: \.element.id) { (index, artist) in
+                        ArtistCard(rank: index + 1, artist: artist)
+                            .frame(width: UIScreen.main.bounds.width * 0.4)
+                    }
+                }
                 .padding(.vertical, 8)
             }
         }

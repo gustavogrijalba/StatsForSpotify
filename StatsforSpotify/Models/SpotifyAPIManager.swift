@@ -16,8 +16,8 @@ class SpotifyAPIManager: ObservableObject {
     
     //init our access token to make api requests
     init(accessToken: String) {
-            self.accessToken = accessToken
-        }
+        self.accessToken = accessToken
+    }
     
     /// api call to get the user profile details
     /// - Returns: UserProfile struct which I have defined in the file, a codable struct to retrieve the details
@@ -137,10 +137,10 @@ class SpotifyAPIManager: ObservableObject {
 //spotify api has its own image object in the response json
 //making a spotify image struct, we can reuse this for all items that need an image
 struct SpotifyImage: Codable {
-        let url: String?
-        let height: Int?
-        let width: Int?
-    }
+    let url: String?
+    let height: Int?
+    let width: Int?
+}
 
 //for the user profile's basic information for a more personal UI
 //using codable so that swift

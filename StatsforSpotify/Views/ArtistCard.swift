@@ -28,18 +28,18 @@ struct ArtistCard: View {
             .clipShape(RoundedRectangle(cornerRadius: 8))
             
             HStack(alignment: .top, spacing: 6) {
-                            Text("\(rank).")
-                                .font(.subheadline.bold())
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(artist.name)
-                                    .font(.subheadline)
-                                    .lineLimit(1)
-                            }
-                        }
-                    }
-                    .padding(8)
-                    .background(Color(.systemBackground))
-                    .cornerRadius(10)
-                    .shadow(radius: 3)
+                Text("\(rank).")
+                    .font(.subheadline.bold())
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(artist.name)
+                        .font(.subheadline)
+                        .lineLimit(1)
+                }
+            }
+        }
+        .padding(8)
+        .background(Color(.systemBackground))
+        .cornerRadius(10)
+        .shadow(radius: 3)
     }
 }
