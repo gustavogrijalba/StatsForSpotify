@@ -13,9 +13,14 @@ struct HomeView: View {
     @State private var showError = false
     @State private var topTracks: UserTopTracksResponse?
     @State private var topArtists: UserTopArtistResponse?
+    @State private var topGenres: [String] = []
     
     var body: some View {
-            VStack(spacing: 0) {                
+            VStack(spacing: 0) {
+                //populate genres once response is received
+                if (topGenres != []) {
+                    GenreView(genres: topGenres)
+                }
                 //allow us to display tracks in a carousel
                 if let tracks = topTracks?.items {
                     TrackCarousel(spotifyController: spotifyController, items: tracks)
@@ -70,6 +75,7 @@ struct HomeView: View {
                 await fetchUserProfile()
                 await fetchTopTracks()
                 await fetchTopArtists()
+                await fetchTopGenres()
             }
     }
     
@@ -112,6 +118,21 @@ struct HomeView: View {
         } catch {
             showError = true
             print("Failed to fetch top tracks:", error.localizedDescription)
+        }
+    }
+    
+    private func fetchTopGenres() async {
+        guard let apiManager = spotifyController.apiManager else {
+            showError = true
+            return
+        }
+        
+        do {
+            topGenres = try await apiManager.getUserTopGenres()
+            print(topGenres)
+        } catch {
+            showError = true
+            print("Failed to fetch top genres:", error.localizedDescription)
         }
     }
 }

@@ -72,6 +72,41 @@ class SpotifyAPIManager: ObservableObject {
         return try decoder.decode(UserTopArtistResponse.self, from: data)
     }
     
+    //the endpoint for top genres no longer exists, so the strategy is to get the top artists,
+    //and count the top genres in a dictionary and return an array of the most listened to genres
+    func getUserTopGenres(time_range : String = "medium_term", limit : Int = 20) async throws -> [String] {
+        //create our endpoint url for the top tracks
+        guard let url = URL(string: baseURL + "me/top/artists?time_range=\(time_range)&limit=\(limit)") else {
+            throw URLError(.badURL)
+        }
+        
+        //construct our request using our URL
+        //we will need to add our auth token to the header
+        var request = URLRequest(url: url)
+        request.setValue(("Bearer " + accessToken), forHTTPHeaderField: "Authorization")
+        
+        //use url session to call the api endpoint
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        //validate our response
+        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            throw URLError(.badServerResponse)
+        }
+        
+        //decode our json response and populate our codable usertopartists struct
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let userTopArtistData = try decoder.decode(UserTopArtistResponse.self, from: data);
+        //calculate the top genre data by first using flat to create one singular array of all
+        //genres (since one artist can have multiple genres, so we have multiple arrays
+        let genres = userTopArtistData.items.flatMap{$0.genres}
+        //count the frequency of each genre by adding it to a dictionary
+        //easy access to sort and return an array
+        let genreFrequency = Dictionary(grouping: genres, by: { $0 }).mapValues { $0.count }
+        //return an array of the sorted dictionary
+        return genreFrequency.sorted { $0.value > $1.value }.map { $0.key }
+    }
+    
     func getUserTopTracks(time_range : String = "medium_term", limit : Int = 20) async throws -> UserTopTracksResponse {
         //create our endpoint url for the top tracks
         guard let url = URL(string: baseURL + "me/top/tracks?time_range=\(time_range)&limit=\(limit)") else {
@@ -149,5 +184,6 @@ struct SpotifyTopArtist : Codable, Identifiable {
     let id : String
     let name : String
     let images: [SpotifyImage]
+    let genres : [String]
     
 }

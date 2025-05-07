@@ -47,7 +47,7 @@ struct TopArtistsListView: View {
     
     var body: some View {
         VStack {
-            Text("Your Top Tracks")
+            Text("Your Top Artists")
                 .font(.title)
             
             Picker("Time Range", selection: $selectedTimeRange) {
