@@ -8,14 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
+    @StateObject private var viewModel = HomeViewModel()
+    @EnvironmentObject var quoteManager : QuoteManager
     @ObservedObject var spotifyController: SpotifyController
-    @State private var userProfile: UserProfile?
-    @State private var showError = false
-    @State private var topTracks: UserTopTracksResponse?
-    @State private var topArtists: UserTopArtistResponse?
-    @State private var topGenres: [String] = []
-    @EnvironmentObject var quoteManager: QuoteManager
-    @State private var quote: QuoteResponse?
     @AppStorage("isDarkMode") private var isDarkMode = true
     @State private var showQuote = false
     
@@ -24,7 +19,7 @@ struct HomeView: View {
             VStack(spacing: 0) {
                 
                 //show a music quote
-                if let quote = quote {
+                if let quote = viewModel.quote {
                     VStack(alignment: .leading, spacing: 12) {
                         Text("“\(quote.q)”")
                             .font(.title3)
@@ -47,16 +42,16 @@ struct HomeView: View {
                     }
                 }
                 //populate genres once response is received
-                if (topGenres != []) {
-                    GenreView(genres: topGenres)
+                if (viewModel.topGenres != []) {
+                    GenreView(genres: viewModel.topGenres)
                 }
                 //allow us to display tracks in a carousel
-                if let tracks = topTracks?.items {
+                if let tracks = viewModel.topTracks?.items {
                     TrackCarousel(spotifyController: spotifyController, items: tracks)
                         .padding(.top, 8)
                 }
                 
-                if let artists = topArtists?.items {
+                if let artists = viewModel.topArtists?.items {
                     ArtistCarousel(spotifyController: spotifyController, items: artists)
                         .padding(.top, 8)
                 }
@@ -69,7 +64,7 @@ struct HomeView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack(spacing: 8) {
-                        if let profile = userProfile {
+                        if let profile = viewModel.userProfile {
                             // use async image to fetch the image from the spotify's
                             //userprofile struct which provides the image url
                             //and display it in the UI
@@ -103,7 +98,7 @@ struct HomeView: View {
                     .padding(.leading, 8)
                 }
             }
-            .alert("Error", isPresented: $showError) {
+            .alert("Error", isPresented: $viewModel.showError) {
                 Button("OK") { }
             } message: {
                 Text("Failed to load profile data")
@@ -112,96 +107,11 @@ struct HomeView: View {
             //screen in the navigation stack, now we check to ensure
             //we keep on call at a time
             .task {
-                if quote == nil {
-                    await fetchMusicQuotes()
-                }
-
-                if topGenres.isEmpty {
-                    await fetchTopGenres()
-                }
-
-                if userProfile == nil {
-                    await fetchUserProfile()
-                }
-
-                if topTracks == nil {
-                    await fetchTopTracks()
-                }
-
-                if topArtists == nil {
-                    await fetchTopArtists()
-                }
+                viewModel.spotifyController = spotifyController
+                viewModel.quoteManager = quoteManager
+                await viewModel.loadAllData()
             }
 
         }
     }
-    
-    private func fetchUserProfile() async {
-        guard let apiManager = spotifyController.apiManager else {
-            showError = true
-            return
-        }
-        
-        do {
-            userProfile = try await apiManager.getUserProfile()
-        } catch {
-            showError = true
-            print("Profile fetch error:", error.localizedDescription)
-        }
-    }
-    
-    private func fetchTopTracks() async {
-        guard let apiManager = spotifyController.apiManager else {
-            showError = true
-            return
-        }
-        
-        do {
-            topTracks = try await apiManager.getUserTopTracks()
-        } catch {
-            showError = true
-            print("Failed to fetch top tracks:", error.localizedDescription)
-        }
-    }
-    
-    private func fetchTopArtists() async {
-        guard let apiManager = spotifyController.apiManager else {
-            showError = true
-            return
-        }
-        
-        do {
-            topArtists = try await apiManager.getUserTopArtists()
-        } catch {
-            showError = true
-            print("Failed to fetch top tracks:", error.localizedDescription)
-        }
-    }
-    
-    private func fetchTopGenres() async {
-        guard let apiManager = spotifyController.apiManager else {
-            showError = true
-            return
-        }
-        
-        do {
-            topGenres = try await apiManager.getUserTopGenres()
-            print(topGenres)
-        } catch {
-            showError = true
-            print("Failed to fetch top genres:", error.localizedDescription)
-        }
-    }
-    
-    private func fetchMusicQuotes() async {
-        do {
-            quote = try await quoteManager.getRandomQuote()
-        } catch {
-            print("Failed to fetch quote: \(error.localizedDescription)")
-        }
-    }
-}
-
-#Preview {
-    HomeView(spotifyController: SpotifyController())
 }
