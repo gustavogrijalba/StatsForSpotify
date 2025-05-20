@@ -36,4 +36,5 @@ struct ArtistCarousel: View {
             }
         }
         .fixedSize(horizontal: false, vertical: true)
-    }}
+    }
+}

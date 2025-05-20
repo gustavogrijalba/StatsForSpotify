@@ -27,7 +27,7 @@ struct HomeView: View {
                             .lineLimit(3)
                             .truncationMode(.tail)
                             .fixedSize(horizontal: false, vertical: true)
-
+                        //display the author of the quote
                         Text("- \(quote.a)")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
@@ -36,6 +36,7 @@ struct HomeView: View {
                     .padding()
                     .opacity(showQuote ? 1 : 0)
                     .offset(y: showQuote ? 0 : 20)
+                    //use an animation to make the quote appear slowly
                     .animation(.easeOut(duration: 0.6), value: showQuote)
                     .onAppear {
                         showQuote = true
@@ -50,7 +51,7 @@ struct HomeView: View {
                     TrackCarousel(spotifyController: spotifyController, items: tracks)
                         .padding(.top, 8)
                 }
-                
+                //display artists
                 if let artists = viewModel.topArtists?.items {
                     ArtistCarousel(spotifyController: spotifyController, items: artists)
                         .padding(.top, 8)

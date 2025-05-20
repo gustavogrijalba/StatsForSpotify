@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+//reused component of the track card
 struct ArtistCard: View {
     let rank: Int
     let artist: SpotifyTopArtist

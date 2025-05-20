@@ -89,5 +89,4 @@ struct TopTracksListView: View {
             }
         }
     }
-    
 }

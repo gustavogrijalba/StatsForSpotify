@@ -33,8 +33,3 @@ struct WelcomeView: View {
         .ignoresSafeArea()
     }
 }
-    
-
-#Preview {
-    WelcomeView(spotifyController: SpotifyController())
-}

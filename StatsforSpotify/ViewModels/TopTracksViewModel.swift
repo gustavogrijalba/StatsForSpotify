@@ -13,7 +13,7 @@ class TopTracksViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var selectedTimeRange: TimeRange = .shortTerm
     
-     func fetchTopTracks() async {
+    func fetchTopTracks() async {
         isLoading = true
         defer { isLoading = false }
         do {
@@ -22,5 +22,4 @@ class TopTracksViewModel: ObservableObject {
             print("Failed to fetch top tracks: \(error)")
         }
     }
-    
 }

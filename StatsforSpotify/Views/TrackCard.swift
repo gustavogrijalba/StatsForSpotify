@@ -28,23 +28,23 @@ struct TrackCard: View {
             .clipShape(RoundedRectangle(cornerRadius: 8))
             
             HStack(alignment: .top, spacing: 6) {
-                            Text("\(rank).")
-                                .font(.subheadline.bold())
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(track.name)
-                                    .font(.subheadline)
-                                    .lineLimit(1)
-                                
-                                Text(track.artists.map { $0.name }.joined(separator: ", "))
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                                    .lineLimit(1)
-                            }
-                        }
-                    }
-                    .padding(8)
-                    .background(Color(.systemBackground))
-                    .cornerRadius(10)
-                    .shadow(radius: 3)
+                Text("\(rank).")
+                    .font(.subheadline.bold())
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(track.name)
+                        .font(.subheadline)
+                        .lineLimit(1)
+                    
+                    Text(track.artists.map { $0.name }.joined(separator: ", "))
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
+                }
+            }
+        }
+        .padding(8)
+        .background(Color(.systemBackground))
+        .cornerRadius(10)
+        .shadow(radius: 3)
     }
 }

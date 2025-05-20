@@ -14,7 +14,7 @@ class TopArtistsViewModel: ObservableObject {
     
     var spotifyController: SpotifyController!
     
-     func fetchTopTracks() async {
+    func fetchTopTracks() async {
         isLoading = true
         defer { isLoading = false }
         do {

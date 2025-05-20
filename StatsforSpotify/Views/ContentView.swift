@@ -19,6 +19,8 @@ struct ContentView: View {
                         .navigationBarBackButtonHidden(true)
                 }
             } else {
+                //otherwise, start the view
+                //at the welcome view where the user can login into their spotify
                 WelcomeView(spotifyController: spotifyController)
             }
         }
@@ -26,8 +28,4 @@ struct ContentView: View {
             spotifyController.handleRedirectURL(url)
         }
     }
-}
-
-#Preview {
-    ContentView(spotifyController: SpotifyController())
 }

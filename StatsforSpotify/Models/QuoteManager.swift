@@ -8,6 +8,10 @@
 import Foundation
 
 class QuoteManager: ObservableObject {
+    //get a random quote
+    //ideally id be able to get quotes or lyrics related to music,
+    //however all apis that get a lyric are paywalled or otherwise
+    //not public to use
     private var baseURL = "https://zenquotes.io/api/random"
     
     func getRandomQuote () async throws -> QuoteResponse {
@@ -24,7 +28,8 @@ class QuoteManager: ObservableObject {
         
         let decoder = JSONDecoder()
         let quotes = try decoder.decode([QuoteResponse].self, from: data)
-        
+        //we get an array of quotes, which we don't need
+        //we only grab the first quote and return it as we will not display the array of quotes returned
         guard let firstQuote = quotes.first else {
             throw URLError(.cannotParseResponse)
         }
@@ -34,6 +39,9 @@ class QuoteManager: ObservableObject {
 }
 
 struct QuoteResponse: Codable {
+    //our struct is like this to fit the json response
+    //where q is the quote itself and
+    //a is the author, making it simple to use as we wouldnt need a fancy decoder
     let q: String
     let a: String
 }

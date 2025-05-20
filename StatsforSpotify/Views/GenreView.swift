@@ -23,8 +23,8 @@ struct GenreView: View {
             //show only 5 genres for the interest of space in the home view
             ForEach(Array(genres.prefix(5).enumerated()), id: \.1) { index, genre in
                 //although we are mimicking a bar chart, because our genre array doesn't have real data
-                //(we are ranking purely from the way its give, as in our genre api we return an array of a
-                //sorted genre array), we cannot use the bar chat since we have data
+                //(we are ranking purely from the way its given, as in our genre api we return an array of a
+                //sorted genre array), we cannot use the bar chat since we have no data
                 HStack {
                     //display the genre in the order of most listened to least listened
                     //genres displayed will be in order (top 5)

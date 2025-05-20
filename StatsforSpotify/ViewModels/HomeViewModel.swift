@@ -15,7 +15,7 @@ class HomeViewModel : ObservableObject {
     @Published var topGenres: [String] = []
     @Published var quote: QuoteResponse?
     @Published var showError = false
-    
+    //needed to use functions
     var spotifyController: SpotifyController!
     var quoteManager: QuoteManager!
     
